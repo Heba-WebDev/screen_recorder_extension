@@ -1,0 +1,48 @@
+{
+    "manifest_version": 3,
+    "name": "HelpMeOut",
+    "description": "Recodes full screens and current tabs",
+    "icons": {
+        "128": "images/logo.png"
+    },
+
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "128": "images/logo.png"
+        }
+    },
+
+    "host_permissions": [
+        "http://*/",
+        "https://*/*"
+    ],
+
+    "permissions": [
+        "scripting",
+        "tabs",
+        "activeTab",
+        "desktopCapture",
+        "tabCapture"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"]
+        }
+    ],
+
+    "web_accessible_resources": [
+    {
+        "resources": ["uuid.js"],
+        "matches": ["<all_urls>"]
+    }
+],
+
+    "version": "1.0.0"
+}

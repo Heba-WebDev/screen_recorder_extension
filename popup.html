@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>HelpMeOut</title>
+</head>
+<body>
+    <main class="main">
+        <header class="header">
+            <img src="images/logo.svg" alt="helpmeout" class="logo" />
+            <div class="header_icons">
+                <img src="images/setting.svg" alt="settings" />
+                <button class="close_btn">
+                    <img src="images/close.svg" alt="close extension" class="close" />
+                </button>
+            </div>
+        </header>
+        <p class="overview">
+            This extension helps you record and share help videos with ease.
+        </p>
+        <section class="screen_options">
+            <button class="option" id="fullScreen">
+                <img src="images/fullscreen_inactive.svg" alt="full screen" />
+                <p>Full Screen</p>
+            </button>
+            <button class="option" id="captureTab">
+                <img src="images/current_tab_inactive.svg" alt="current tab" />
+                <p>Current Tab</p>
+            </button>
+        </section>
+        <section class="permissions">
+            <div class="permission_icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="camera">
+                    <path stroke-linecap="round"
+                        d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+                <p>Camera</p>
+
+            </div>
+            <div>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </section>
+        <section class="permissions">
+            <div class="permission_icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="audio">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+                </svg>
+
+                <p>Audio</p>
+            </div>
+            <div>
+                <label class="switch">
+                    <input type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </section>
+        <div class="video">
+            <button
+            id="start_video"
+            name="start_video"
+            class="start_recording"
+            >
+            Start Recording
+            </button>
+            <button
+            id="stop_video"
+            name="start_video"
+            class="start_recording"
+            >
+            Stop Recording
+            </button>
+        </div>
+        <div id="overlay" class="overlay">
+            <h2>STOP</h2>
+        </div>
+    </main>
+    <script src="./js//popup.js"></script>
+</body>
+</html>

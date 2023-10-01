@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Reset margins */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+figure,
+picture {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  font-weight: 400;
+}
+
+/* make images easier to work with */
+img,
+picture {
+  max-width: 100%;
+  display: block;
+}
+
+/* make form elements easier to work with */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* remove animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+body {
+    width: 300px;
+    height: 450px;
+    padding: 0;
+    margin: 0;
+    font-family: "Work Sans", sans-serif;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 50%;
+}
+
+.header_icons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.close_btn {
+  background-color: transparent;
+  border: 0;
+}
+
+.close_btn:hover {
+  cursor: pointer;
+}
+
+.close {
+    display: flex;
+    align-items: center;
+    margin-top: 7.5px;
+}
+
+.overview {
+    color: #413C6D;
+    opacity: 0.9;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.screen_options {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1rem;
+    color: gray;
+}
+
+.option > img {
+    width: 32px;
+    height: 32px;
+    justify-self: center;
+    margin: 0 auto;
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    border: 0;
+    padding-top: 0.7rem;
+    gap: 0.5rem;
+}
+
+.option:hover {
+  cursor: pointer;
+}
+
+.permissions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem;
+    border: 1px solid #100A42;
+    font-size: 1rem;
+    border-radius: 12px;
+}
+
+.camera,
+.audio {
+    width: 24px;
+}
+
+.permission_icon {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.start_recording {
+    border: 0;
+    outline: 0;
+    width: 100%;
+    background-color: #100A42;
+    color: white;
+    padding: 0.8rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 300;
+}
+.start_recording:hover {
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: -10px;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 0px;
+  bottom: 0px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #100A42;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #100A42;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 24px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.overlay {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none; /* Initially hidden */
+    /* Add other styles as needed, e.g., padding, button styles */
+}
+
+.video {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
