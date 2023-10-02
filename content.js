@@ -1,29 +1,39 @@
+var baseApiUrl = "http://localhost:3000";
 var recorder = null;
-var mediaChunks = [];
-var filename = null; // Initialize the filename
+var chunks = [];
+var filename = null;
 
-function sendChunkToBackend(filename) {
-  console.log("sending filename");
-  console.log(filename);
-
-  fetch(`http://localhost:3000/upload?filename=${filename}`, {
-    method: "POST",
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to upload filename");
-      }
-      console.log("Filename uploaded successfully");
+// Starts sending the video chunks to the backend
+async function sendChunkToBackend(base64Data) {
+  if (!filename) {
+    console.error("File is not set. Aborting sendChunkToBackend.");
+    return;
+  } else {
+    console.log(base64Data);
+    fetch(`http://localhost:3000/upload?filename=${filename}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ chunk: base64Data }),
     })
-    .catch((error) => {
-      console.error("Error uploading filename:", error);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to upload filename");
+        }
+        console.log("Filename uploaded successfully");
+      })
+      .catch((error) => {
+        console.error("Error uploading filename:", error);
+      });
+  }
 }
 
+// When user grants permissions and hits start or stop
 function onAccessApproved(stream) {
   if (!recorder) {
     recorder = new MediaRecorder(stream);
-    recorder.start(2000);
+    recorder.start(5000);
 
     recorder.onstop = function () {
       stream.getTracks().forEach(function (track) {
@@ -31,21 +41,25 @@ function onAccessApproved(stream) {
           track.stop();
         }
       });
-
       filename = null;
+      chunks = [];
     };
   }
 
+  // When there are available chunks
   recorder.ondataavailable = function (event) {
-    mediaChunks.push(event.data);
-
-    // Set the filename (ID) if it's null
+    chunks.push(event.data);
     if (!filename) {
       filename = generateUniqueID();
     }
-    sendChunkToBackend(event.data); // Send the chunks to the backend
-    // Clear the chunks array to avoid sending duplicates
-    mediaChunks.length = 0;
+    if (event.data.size > 0) {
+      // Convert the blob to base64
+      const reader = new FileReader();
+      reader.onload = function () {
+        sendChunkToBackend(reader.result);
+      };
+      reader.readAsDataURL(event.data);
+    }
   };
 }
 
@@ -55,22 +69,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     generateUniqueID();
     navigator.mediaDevices
       .getDisplayMedia({
-        audio: true,
         video: {
-          width: 999999999,
-          height: 999999999,
+          mediaSource: "screen",
         },
+        audio: true,
+        // audio: true,
+        // video: {
+        //   width: 999999999,
+        //   height: 999999999,
+        // },
       })
       .then((stream) => {
         onAccessApproved(stream);
       });
-  } else if (message.action === "stop_video") {
+  }
+
+  if (message.action === "stop_video") {
     sendResponse(`processed ${message.action}`);
     if (!recorder) {
       console.log("no recorder");
     } else if (recorder.state === "recording") {
       recorder.stop();
-      sendChunkToBackend(); // Send any remaining chunks when stopping
     } else {
       console.log("Recorder not in recoding state");
     }
